@@ -1,5 +1,5 @@
 <div class="sidebar">
-    <div class="logo">logo</div>
+    <div class="logo"></div>
     <ul class="menu">
         <li>
             <a href="{{ route('user.dashboard') }}">

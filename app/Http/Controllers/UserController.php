@@ -28,6 +28,26 @@ class UserController extends Controller
             return redirect()->route('user.login');
         }
     }
+    public function getAllUserForApi()
+    {
+        $users = User::orderBy('id', 'DESC')->get();
+        return response()->json($users);
+    }
+    public function storeUserForApi(UserRegistrationRequest $request)
+    {
+        $validated = $request->only(['name', 'email', 'password']);
+
+        try {
+            $user =  User::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'password' => Hash::make($validated['password']),
+            ]);
+        } catch (Exception $e) {
+            Log::error($e);
+        }
+        return response()->json($user);
+    }
     public function index()
     {
         $users = User::with(['posts' => function ($query) {
